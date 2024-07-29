@@ -58,19 +58,27 @@ namespace Cafe
         {
              panel1.Controls.Clear();
 
-            foreach (Button button in buttonList)
+            
+            for (int i = 0; i < buttonList.Count; i++)
             {
-                button.Text = button.Text.Insert(0,name);
-                button.Click += new EventHandler(Click_Button);
-                panel1.Controls.Add(button);
+                buttonList[i].Text = buttonList[i].Text.Insert(0, name);
+                buttonList[i].Click += new EventHandler(Click_Button2);
+                panel1.Controls.Add(buttonList[i]);
             }
 
+
+
         }
-        public void Click_Button(object sender,EventArgs e)
+        public void Click_Button2(object sender,EventArgs e)
         {
             Button button = (Button)sender;
+            tableInfo.label2.Text = button.Text;
             tableInfo.ShowDialog();
         }
 
+        private void Formtables_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }

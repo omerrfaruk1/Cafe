@@ -31,7 +31,8 @@ namespace Cafe
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            panel1.BackColor = Color.Transparent;
+           
             foreach(Control control in this.Controls)
             {
                 if(control is Button bt)
@@ -69,32 +70,29 @@ namespace Cafe
            
             for (int i = 0; i < button.Count; i++)
             {
-                button[i].Click += new EventHandler(ClickButton);
-               
-                foreach (Button b in button)
-                {
-                   
-                    panel1.Controls.Add(b);
+                button[i].Click += new EventHandler(ClickButton);               
+                panel1.Controls.Add(button[i]);
 
-                }
             }
         }
         public void ClickButton(object sender, EventArgs e)
         {
             Button b = (Button)sender;
-            textBox1.Text += b.Text;
+            label6.Text += b.Text;
         }
 
         private void button13_Click(object sender, EventArgs e)
         {
-            if(textBox1.Text == "")
+            if(label6.Text == "")
             {
-                return;
+                
+                MessageBox.Show("Şifre Alanı Zaten Boş");
+                 
             }
             else
             {
-                string text = textBox1.Text;
-                textBox1.Text = text.Substring(0, text.Length - 1);
+                string text = label6.Text;
+                label6.Text = text.Substring(0, text.Length - 1);
                 
             }   
             
@@ -107,7 +105,7 @@ namespace Cafe
             string connstring = "Data Source=DESKTOP-LCHCDI1;Initial Catalog=cafe;Integrated Security=True;Encrypt=False";
             conn.ConnectionString = connstring;
             conn.Open();
-            SqlCommand command = new SqlCommand("Select password from login where password = " +textBox1.Text+"", conn);
+            SqlCommand command = new SqlCommand("Select password from login where password = " +label6.Text+"", conn);
             SqlDataReader reader = command.ExecuteReader();
 
             if (reader.Read()) {
