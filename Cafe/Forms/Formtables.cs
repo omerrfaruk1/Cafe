@@ -18,9 +18,9 @@ namespace Cafe
         private const int heigth = 80;
         private const int perRows = 6;
         private const int spacing = 20;
-        int salonno = 10;
-        int balkonno = 14;
-        int bahceno = 17;
+        int salonno = 6;
+        int balkonno = 9;
+        int bahceno = 7;
         public Formtables()
         {
             InitializeComponent();

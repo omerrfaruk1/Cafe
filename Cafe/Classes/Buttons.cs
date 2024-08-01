@@ -39,14 +39,12 @@ namespace Cafe
                     int y = row * verticalSpacing;
 
                     buttons[i].Location = new System.Drawing.Point(x, y);
-                    //buttons[i].Click += new EventHandler(ClickButton);
 
                     foreach (Button b in buttons)
                     {
                         b.FlatStyle = FlatStyle.Flat;
                         b.FlatAppearance.BorderSize = 0;
                         b.BackColor = Color.Teal;
-                        //panel1.Controls.Add(b);
 
                     }
                 }

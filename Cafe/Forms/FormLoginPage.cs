@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Data.SqlClient;
 
 using System.Windows.Forms;
+using Cafe.Classes;
 
 namespace Cafe
 {
@@ -99,30 +100,20 @@ namespace Cafe
         }
 
         private void button1_Click(object sender, EventArgs e)
-        {
+        {   
+            string param = label6.Text;
+            string komut = "Select password from login where password = @k1";
 
-            SqlConnection conn = new SqlConnection();
-            string connstring = "Data Source=DESKTOP-LCHCDI1;Initial Catalog=cafe;Integrated Security=True;Encrypt=False";
-            conn.ConnectionString = connstring;
-            conn.Open();
-            SqlCommand command = new SqlCommand("Select password from login where password = " +label6.Text+"", conn);
-            SqlDataReader reader = command.ExecuteReader();
+            SqlDataReader records = Database.GetDatabase(komut,param);
 
-            if (reader.Read()) {
-                Form form = new Formtables();
-                form.ShowDialog();
-            }
-            else
-            {
-                label4.Text = "Lütfen Tekrar Deneyiniz";
+            while (records.Read()) {
+                Formtables formtables = new Formtables();
+                formtables.ShowDialog();
             }
 
-
-            conn.Close();
-           
 
         }
 
-       
+
     }
 }
