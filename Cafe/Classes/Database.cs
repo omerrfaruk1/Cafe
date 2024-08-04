@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.OleDb;
 using System.Data.SqlClient;
 
 using System.Linq;
@@ -32,6 +33,28 @@ namespace Cafe.Classes
 
         }
 
+        public static void SetDatabase(string ad,int price,int amount ,string tableName)
+        {
+            SqlConnection con = new SqlConnection(connectionString);
+            try
+            {
+                con.Open();
+                string command = "insert into product_table (Ad,Fiyat,Miktar,masa,Eklenme_Tarihi) values (@ad,@price,@amount,@table,@date)";
+                SqlCommand cmd = new SqlCommand(command, con);
+                cmd.Parameters.AddWithValue("@ad", ad);
+                cmd.Parameters.AddWithValue("@price", price);
+                cmd.Parameters.AddWithValue("@amount", amount);
+                cmd.Parameters.AddWithValue("@table", tableName);
+                cmd.Parameters.AddWithValue("@date", DateTime.Now);
+                cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex) {
+                MessageBox.Show (ex.Message);
+                
+            }
+
+
+        }
         
     }
 }

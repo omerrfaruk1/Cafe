@@ -73,12 +73,13 @@ namespace Cafe
         {
             Button button = (Button)sender;
             tableInfo.label2.Text = button.Text;
+            tableInfo.SetItemsInDataGridView();
             tableInfo.ShowDialog();
         }
 
         private void Formtables_Load(object sender, EventArgs e)
         {
-
+             
         }
     }
 }

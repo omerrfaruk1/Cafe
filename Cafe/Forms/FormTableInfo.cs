@@ -1,13 +1,17 @@
 ﻿using Cafe.Classes;
+using Newtonsoft.Json;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Text.Json.Serialization;
 
 namespace Cafe
 {
@@ -16,6 +20,7 @@ namespace Cafe
         private Buttons buttons;
         private Menu menuItem;
         private AddItems addItem;
+        private DataTable dt;
         public FormTableInfo()
         {
             InitializeComponent();
@@ -23,9 +28,23 @@ namespace Cafe
             buttons = new Buttons();
             menuItem = new Menu();
             addItem = new AddItems();
+
+
+        }
+        public void SetItemsInDataGridView()
+        {
+            dt = menuItem.GetDataTableByTableInfo(label2.Text);
+            dataGridView1.DataSource = dt;
             
         }
 
+        private void FormTableInfo_Load(object sender, EventArgs e)
+        {
+            
+            
+
+        }
+    
         private void ButtonAddToPanel(string category)
         {
             
@@ -39,18 +58,40 @@ namespace Cafe
                 panel1.Controls.Add(buttonitem[i]);
             }
         }
-        private void ClickButton(object sender, EventArgs e)
+        public void ClickButton(object sender, EventArgs e)
         {
+            
             Button button = (Button)sender;
-            
-            DataTable reader =  menuItem.GetItemInfos(button.Text); 
-            dataGridView1.DataSource = reader;
 
+            setvalueindat(button);
+            dt = menuItem.GetDataTableByTableInfo(label2.Text);
+            dataGridView1.DataSource = dt;
             
+
+
         }
 
 
+        private void setvalueindat(Button btn)
+        {
+            string tablenames = label2.Text;
+            string ad, table;
+            int price, amount;
+            
+            DataTable reader = menuItem.GetItemInfos(btn.Text, tablenames);
 
+            foreach (DataRow row in reader.Rows) {
+                ad = row[0].ToString();
+                price = Convert.ToInt32(row[1].ToString());
+                amount = Convert.ToInt32(row[2].ToString());
+                table = tablenames;
+
+                Database.SetDatabase(ad, price, amount,table);
+
+            }
+
+            reader.Clear();
+        }
         private void button5_Click(object sender, EventArgs e)
         {
             ButtonAddToPanel("1");
@@ -80,6 +121,12 @@ namespace Cafe
         private void button10_Click(object sender, EventArgs e)
         {
             ButtonAddToPanel("6");
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            //SetDatabase
+
         }
     }
 }

@@ -24,7 +24,7 @@ namespace Cafe
             List<string[]> results = new List<string[]>();
 
             param = parameter.ToString();
-            komut = "Select name from products where category = @k1";
+            komut = "Select Ad from products where category = @k1";
             
             SqlDataReader dr = Database.GetDatabase(komut, param);
             int k = 0;
@@ -49,13 +49,47 @@ namespace Cafe
 
 
         }
-        public DataTable GetItemInfos(string name) {
+        public DataTable GetItemInfos(string name,string tablename) {
 
             param = name.ToString();
-            komut = "Select name,price,main_category,amount,id from products where name = @k1";
+            komut = "Select Ad,Fiyat,Miktar from products where Ad = @k1";
 
             SqlDataReader reader = Database.GetDatabase(komut, param);
+            
+            dt.Load(reader);
+            //if (!dt.Columns.Contains("Eklenme_Tarihi") && !dt.Columns.Contains("masa"))
+            //{
+            //    dt.Columns.Add(new DataColumn("masa", typeof(string)));
+            //    dt.Columns.Add(new DataColumn("Eklenme_Tarihi", typeof(DateTime)));
 
+            //    foreach (DataRow item in dt.Rows)
+            //    {
+            //        item["masa"] = tablename;
+            //        item["Eklenme_Tarihi"] = DateTime.Now;
+            //    }
+            //}
+            //else
+            //{
+            //    foreach (DataRow item in dt.Rows)
+            //    {
+            //        item["masa"] = tablename;
+            //        item["Eklenme_Tarihi"] = DateTime.Now;
+
+            //    }
+            //}
+
+            return dt;
+        }
+        
+
+        public DataTable GetDataTableByTableInfo(string name)
+        {
+
+            param = name.ToString();
+            komut = "Select Ad,Fiyat,Miktar,Eklenme_Tarihi from product_Table where masa = @k1";
+
+            SqlDataReader reader = Database.GetDatabase(komut, param);
+            dt.Clear();
             dt.Load(reader);
 
             return dt;
