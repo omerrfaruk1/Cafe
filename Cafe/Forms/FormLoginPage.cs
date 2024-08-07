@@ -40,7 +40,8 @@ namespace Cafe
                 {
                     bt.FlatStyle = FlatStyle.Flat;
                     bt.FlatAppearance.BorderSize = 0;
-                    bt.BackColor = Color.Teal;
+                    bt.Font = new Font("Microsoft YaHei UI", 12, FontStyle.Bold);
+                    bt.BackColor = ColorTranslator.FromHtml("#375168");
 
                 }
             }
@@ -107,6 +108,7 @@ namespace Cafe
             SqlDataReader records = Database.GetDatabase(komut,param);
 
             while (records.Read()) {
+                
                 Formtables formtables = new Formtables();
                 formtables.ShowDialog();
             }

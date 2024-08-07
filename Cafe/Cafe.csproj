@@ -89,6 +89,12 @@
     <Compile Include="Classes\AddItems.cs" />
     <Compile Include="Classes\Buttons.cs" />
     <Compile Include="Classes\Database.cs" />
+    <Compile Include="Forms\FormBill.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormBill.Designer.cs">
+      <DependentUpon>FormBill.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormLoginPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -111,6 +117,9 @@
     <Compile Include="Forms\Formtables.Designer.cs">
       <DependentUpon>Formtables.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\FormBill.resx">
+      <DependentUpon>FormBill.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormLoginPage.resx">
       <DependentUpon>FormLoginPage.cs</DependentUpon>
     </EmbeddedResource>

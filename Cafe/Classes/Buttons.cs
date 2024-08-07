@@ -44,9 +44,10 @@ namespace Cafe
                     {
                         b.FlatStyle = FlatStyle.Flat;
                         b.FlatAppearance.BorderSize = 0;
-                        b.BackColor = Color.Teal;
+                    b.Font = new Font("Microsoft YaHei UI", 12, FontStyle.Bold);
+                        b.BackColor = ColorTranslator.FromHtml("#375168");
 
-                    }
+                }
                 }
             
             return buttons;

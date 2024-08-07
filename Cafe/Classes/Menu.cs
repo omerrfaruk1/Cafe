@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Cafe.Classes;
 using System.Data.SqlClient;
 using System.Data;
+using System.Drawing;
 
 namespace Cafe
 {
@@ -33,14 +34,18 @@ namespace Cafe
                  results.Add(new string[] { dr[0].ToString() });
                 k++;
             }
+            dr.Close();
 
-            var btn = button.Create_Buttons(results.Count, 50, 50, 10, 4);
+            var btn = button.Create_Buttons(results.Count, 100, 100, 10, 4);
             int i = 0;
-
-
+            string imgPath = "C:\\Users\\omer2\\Downloads\\Venedik Coffee (1).png";
+            Image image = Image.FromFile(imgPath);
             foreach (var res in results) {
 
                 btn[i].Text = res.FirstOrDefault()?.ToString()?? "Look the in res";
+                btn[i].Font = new Font(btn[i].Font.FontFamily, 16);
+                btn[i].BackgroundImage = image;
+                btn[i].Padding = new Padding(0, 25, 0, 0);
                 i++;
             }
                     
@@ -52,31 +57,13 @@ namespace Cafe
         public DataTable GetItemInfos(string name,string tablename) {
 
             param = name.ToString();
-            komut = "Select Ad,Fiyat,Miktar from products where Ad = @k1";
+            komut = "Select Ad,Fiyat from products where Ad = @k1";
 
             SqlDataReader reader = Database.GetDatabase(komut, param);
             
+            dt.Clear();
             dt.Load(reader);
-            //if (!dt.Columns.Contains("Eklenme_Tarihi") && !dt.Columns.Contains("masa"))
-            //{
-            //    dt.Columns.Add(new DataColumn("masa", typeof(string)));
-            //    dt.Columns.Add(new DataColumn("Eklenme_Tarihi", typeof(DateTime)));
-
-            //    foreach (DataRow item in dt.Rows)
-            //    {
-            //        item["masa"] = tablename;
-            //        item["Eklenme_Tarihi"] = DateTime.Now;
-            //    }
-            //}
-            //else
-            //{
-            //    foreach (DataRow item in dt.Rows)
-            //    {
-            //        item["masa"] = tablename;
-            //        item["Eklenme_Tarihi"] = DateTime.Now;
-
-            //    }
-            //}
+           
 
             return dt;
         }
@@ -86,12 +73,12 @@ namespace Cafe
         {
 
             param = name.ToString();
-            komut = "Select Ad,Fiyat,Miktar,Eklenme_Tarihi from product_Table where masa = @k1";
+            komut = "Select Ad,main_category,Fiyat from product_Table where masa = @k1";
 
             SqlDataReader reader = Database.GetDatabase(komut, param);
             dt.Clear();
             dt.Load(reader);
-
+            reader.Close();
             return dt;
         }
     }
