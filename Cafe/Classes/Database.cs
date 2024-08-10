@@ -13,7 +13,7 @@ namespace Cafe.Classes
 {
     public class Database
     {
-        private static string connectionString = "Data Source=DESKTOP-LCHCDI1;Initial Catalog=cafe;Integrated Security=True;Encrypt=False";
+        private static string connectionString = Properties.Settings.Default.cafeConnectionString;
 
         public static SqlDataReader GetDatabase(string commandparm,string commandval)
         {
@@ -146,5 +146,15 @@ namespace Cafe.Classes
             }
         }
 
+        public static void UpdateProductPriceAfterBill(string tablaname, double billAmount) {
+            
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            sqlConnection.Open();
+            string cmd = "UPDATE product_table SET Fiyat = Fiyat * @b1 , changed = 'True' WHERE masa = @t1";
+            SqlCommand command = new SqlCommand(cmd,sqlConnection);
+            command.Parameters.Add("@b1", billAmount);
+            command.Parameters.Add("@t1", tablaname);
+            command.ExecuteNonQuery();
+        }
     }
 }

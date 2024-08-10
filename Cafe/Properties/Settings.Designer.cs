@@ -23,14 +23,40 @@ namespace Cafe.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-LCHCDI1;Initial Catalog=cafe;Integrated Security=True;TrustSe" +
-            "rverCertificate=True")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=DESKTOP-LCHCDI1;Initial Catalog=cafe;Integrated Security=True;Encrypt" +
+            "=False\r\n")]
         public string cafeConnectionString {
             get {
                 return ((string)(this["cafeConnectionString"]));
+            }
+            set {
+                this["cafeConnectionString"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BillInfo {
+            get {
+                return ((string)(this["BillInfo"]));
+            }
+            set {
+                this["BillInfo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public int BillAmount {
+            get {
+                return ((int)(this["BillAmount"]));
+            }
+            set {
+                this["BillAmount"] = value;
             }
         }
     }

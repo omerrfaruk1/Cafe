@@ -14,6 +14,7 @@ using System.Windows.Forms;
 using System.Text.Json.Serialization;
 using System.Data.SqlClient;
 using static System.Net.WebRequestMethods;
+using Cafe.Forms;
 
 namespace Cafe
 {
@@ -158,14 +159,6 @@ namespace Cafe
             
 
         }
-
-        private void panel2_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-        
-
         private void button3_Click(object sender, EventArgs e)
         {
             Database.DeleteAllProductInTable(label2.Text);
@@ -175,11 +168,11 @@ namespace Cafe
 
         private void button4_Click(object sender, EventArgs e)
         {
-            //if (e.RowIndex >= 0)
-            //{
-            //    dataGridView1.Rows[e.RowIndex].Selected = true;
 
-            //    // Seçili satır üzerinde gezinin
+            try {
+            
+            
+            
             DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
             foreach (DataGridViewCell cell in selectedRow.Cells)
             {
@@ -191,8 +184,13 @@ namespace Cafe
 
                 }
             }
-            //}
-            // İade Seçili Olan ürün İade Olacak
+            }
+            catch (Exception ex) { 
+                MessageBox.Show("İlk Satırdaki Ürünü Silmek İstediğinizden Eminmisiniz ? ");
+                button3_Click(sender,e);
+            }
+
+            //  Seçili Olan ürün İade et
         }
 
         private void button11_Click_1(object sender, EventArgs e)
@@ -215,7 +213,6 @@ namespace Cafe
         private void button2_Click(object sender, EventArgs e)
         {
             ActiveForm.Close();
-            
         }
 
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -224,11 +221,14 @@ namespace Cafe
                 dataGridView1.Rows[e.RowIndex].Selected = true;
                 
             }
-            //DataGridViewRow selectedRow = dataGridView1.Rows[e.RowIndex];
-            //foreach (DataGridViewCell cell in selectedRow.Cells)
-            //{
-            //    Console.WriteLine(cell.Value);
-            //}
+          
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            FormBill formBill = new FormBill();
+            formBill.Text = label2.Text;
+            formBill.ShowDialog();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Cafe
     public partial class FormLoginPage : Form
     {
         private Buttons createbtn;
-        private const int btnNumber = 12; // Kaç Tane Buton Oluşturacağını yaz
+        private const int btnNumber = 12; 
         private const int PerRow = 3; // Her satırda 3 buton
         private const int Spacing = 10; // Butonlar arasındaki boşluk
         private const int width = 50;

@@ -189,7 +189,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(279, 1050);
             this.panel2.TabIndex = 7;
-            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // panel3
             // 
@@ -290,6 +289,7 @@
             this.button1.TabStop = false;
             this.button1.Text = "Ödeme Al";
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // label1
             // 

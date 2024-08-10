@@ -14,6 +14,7 @@ namespace Cafe
     {
         private Buttons crtBtn;
         private FormTableInfo tableInfo;
+        private Menu menu;
         private const int width = 80;
         private const int heigth = 80;
         private const int perRows = 6;
@@ -26,19 +27,20 @@ namespace Cafe
             InitializeComponent();
             crtBtn = new Buttons();
             tableInfo = new FormTableInfo();
+            menu = new Menu();
         }
 
        
        
 
-        private void sbtn_Click(object sender, EventArgs e)
+        public void sbtn_Click(object sender, EventArgs e)
         {
             var salonbtn = crtBtn.Create_Buttons(salonno, width, heigth, spacing, perRows);
             string salon = "Salon ";
             addButtonsToPanel(salonbtn,salon);
         }
 
-        private void bbtn_Click(object sender, EventArgs e)
+        public void bbtn_Click(object sender, EventArgs e)
         {
             
             var balkonbtn = crtBtn.Create_Buttons(balkonno, width, heigth, spacing, perRows);
@@ -46,7 +48,7 @@ namespace Cafe
             addButtonsToPanel(balkonbtn, balkon);
         }
 
-        private void babtn_Click(object sender, EventArgs e)
+        public void babtn_Click(object sender, EventArgs e)
         {
             
             var bahcebtn = crtBtn.Create_Buttons(bahceno, width, heigth, spacing, perRows);
@@ -62,6 +64,17 @@ namespace Cafe
             for (int i = 0; i < buttonList.Count; i++)
             {
                 buttonList[i].Text = buttonList[i].Text.Insert(0, name);
+                var reader = menu.GetDataTableByName(buttonList[i].Text);
+                if (reader.HasRows)
+                {
+                    buttonList[i].BackColor = Color.Green;
+                }
+                var readerC = menu.GetDataTableByChanged(buttonList[i].Text);
+                if (readerC.HasRows)
+                {
+                    buttonList[i].BackColor = Color.Red;
+                }
+
                 buttonList[i].Click += new EventHandler(Click_Button2);
                 panel1.Controls.Add(buttonList[i]);
             }
@@ -77,7 +90,7 @@ namespace Cafe
             tableInfo.ShowDialog();
         }
 
-        private void Formtables_Load(object sender, EventArgs e)
+        public void Formtables_Load(object sender, EventArgs e)
         {
              
         }
