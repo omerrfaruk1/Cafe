@@ -28,12 +28,10 @@ namespace Cafe
             komut = "Select Ad from products where category = @k1";
 
             SqlDataReader dr = Database.GetDatabase(komut, param);
-            int k = 0;
             while (dr.Read())
             {
 
                 results.Add(new string[] { dr[0].ToString() });
-                k++;
             }
             dr.Close();
 
@@ -56,53 +54,7 @@ namespace Cafe
 
 
         }
-        public DataTable GetItemInfos(string name, string tablename)
-        {
-
-            param = name.ToString();
-            komut = "Select Ad,Fiyat from products where Ad = @k1";
-
-            SqlDataReader reader = Database.GetDatabase(komut, param);
-
-            dt.Clear();
-            dt.Load(reader);
-
-
-            return dt;
+        
+      
         }
-
-
-        public DataTable GetDataTableByTableInfo(string name)
-        {
-
-            param = name.ToString();
-            komut = "Select Ad,main_category,Fiyat from product_Table where masa = @k1";
-
-            SqlDataReader reader = Database.GetDatabase(komut, param);
-            dt.Clear();
-            dt.Load(reader);
-            reader.Close();
-            return dt;
-        }
-        public SqlDataReader GetDataTableByName(string name)
-        {
-            param = name.ToString();
-            komut = "Select masa from product_Table where masa = @k1";
-
-            SqlDataReader reader = Database.GetDatabase(komut, param);
-
-            return reader;
-
-        }
-        public SqlDataReader GetDataTableByChanged(string name)
-        {
-            param = name.ToString();
-            komut = "Select * from product_Table where masa = @k1 and changed = 'True'";
-
-            SqlDataReader reader = Database.GetDatabase(komut, param);
-
-            return reader;
-        }
-    }
-
     }

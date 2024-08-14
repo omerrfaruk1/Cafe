@@ -1,4 +1,5 @@
 ﻿using Cafe.Classes;
+using Cafe.Interface;
 using Cafe.Properties;
 using System;
 using System.Collections.Generic;
@@ -12,19 +13,23 @@ using System.Windows.Forms;
 
 namespace Cafe.Forms
 {
-    public partial class FormBill : Form
+    public partial class FormBill : Form 
     {
         private Buttons btnBill;
         private DataTable dt;
         private Menu menu;
+        private readonly IDataAccessTable _dataAccess;
+
         public FormBill()
         {
             InitializeComponent();
             btnBill = new Buttons();
             dt = new DataTable();
             menu = new Menu();
-
+            _dataAccess = new Tables();
+            
         }
+
         bool percent = false;
         bool percent2 = false;
         bool percent3 = false;
@@ -79,17 +84,25 @@ namespace Cafe.Forms
 
         }
         private void clickButton(object sender, EventArgs e) {
+            var button = (Button)sender;
+            if(button.Text == "C")
+            {
+                button11.Text = "";
+            }
+            else
+            {
+                button11.Text += button.Text;
+            }
         }
 
         private void FillDatagridview(string tablename)
         {
             double sum = 0;
-            
-
-            dt = menu.GetDataTableByTableInfo(tablename);
-
+            var reader = _dataAccess.GetDataTableByTableInfo(tablename);
+            dt.Clear();
+            dt.Load(reader);
+            reader.Close();
             dataGridView1.DataSource = dt;
-
             sum = getSum(sum);
 
 
@@ -100,7 +113,7 @@ namespace Cafe.Forms
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
                 
-                object cell = row.Cells[2].Value;
+                object cell = row.Cells[1].Value;
 
                 if (cell != null && double.TryParse(cell.ToString(), out double numericValue))
                 {
@@ -161,31 +174,47 @@ namespace Cafe.Forms
                 FillDatagridview(this.Text);
             }
             else if(percent2 == true){
-                label1.Text = (Convert.ToDouble(label1.Text.Replace("₺","")) - Convert.ToDouble(button11.Text.Replace("₺", ""))).ToString(); 
-                label2.Text = "Bir Ödeme Oldu Yeni Tutar " + label1.Text;
-                SaveLabelValue();
+                SetAndGetValueLbl();
                 double param = 0.5;
                 Database.UpdateProductPriceAfterBill(this.Text,param);
             }
             else if (percent3 == true)
             {
-                label1.Text = (Convert.ToDouble(label1.Text.Replace("₺", "")) - Convert.ToDouble(button11.Text.Replace("₺", ""))).ToString();
-                label2.Text = "Bir Ödeme Oldu Yeni Tutar " + label1.Text;
-                SaveLabelValue();
+                SetAndGetValueLbl();
                 double param = 0.7;
                 Database.UpdateProductPriceAfterBill(this.Text, param);
             }
             else if (percent4 == true)
             {
-                label1.Text = (Convert.ToDouble(label1.Text.Replace("₺", "")) - Convert.ToDouble(button11.Text.Replace("₺", ""))).ToString();
-                label2.Text = "Bir Ödeme Oldu Yeni Tutar " + label1.Text;
-                SaveLabelValue();
+                SetAndGetValueLbl();
                 double param = 0.75;
                 Database.UpdateProductPriceAfterBill(this.Text, param);
             }
 
+            void SetAndGetValueLbl()
+            {
+                label1.Text = (Convert.ToDouble(label1.Text.Replace("₺", "")) - Convert.ToDouble(button11.Text.Replace("₺", ""))).ToString();
+                label2.Text = "Bir Ödeme Oldu Yeni Tutar " + label1.Text;
+                SaveLabelValue();
+            }
+        }
+        public void button9_Click(object sender, EventArgs e)
+        {
+            double lb1 = Convert.ToDouble(label1.Text.Replace("₺", "")); // Toplam Fiyat
+            double lb12 = Convert.ToDouble(button11.Text); // İskonto Oranı
+            label1.Text = (lb1 - (lb1 * lb12 / 100)).ToString("F2"); // İskonto sonrası Ortaya Çıkan Sonuç
+            label3.Text =  "% " + button11.Text+  " Oranında Bir İskonto Uygulandı";
+            label2.Text = "Bir Ödeme Oldu Yeni Tutar " + label1.Text;
+            double param = 1 - (Convert.ToDouble(button11.Text) * 0.01) ;
+            button11.Text = "";
+            Database.UpdateProductPriceAfterBill(this.Text, param);
         }
 
-       
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.Close();
+
+
+        }
     }
 }

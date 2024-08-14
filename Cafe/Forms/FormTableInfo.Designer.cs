@@ -42,8 +42,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.button13 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -193,8 +191,6 @@
             // panel3
             // 
             this.panel3.Controls.Add(this.button13);
-            this.panel3.Controls.Add(this.button12);
-            this.panel3.Controls.Add(this.button11);
             this.panel3.Controls.Add(this.button4);
             this.panel3.Controls.Add(this.button3);
             this.panel3.Controls.Add(this.button2);
@@ -206,33 +202,13 @@
             // 
             // button13
             // 
-            this.button13.Location = new System.Drawing.Point(21, 318);
+            this.button13.Location = new System.Drawing.Point(21, 212);
             this.button13.Name = "button13";
             this.button13.Size = new System.Drawing.Size(95, 32);
             this.button13.TabIndex = 0;
             this.button13.Text = "İptal";
             this.button13.UseVisualStyleBackColor = true;
             this.button13.Click += new System.EventHandler(this.button13_Click);
-            // 
-            // button12
-            // 
-            this.button12.Location = new System.Drawing.Point(21, 270);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(95, 32);
-            this.button12.TabIndex = 0;
-            this.button12.Text = "İskonto";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.button12_Click);
-            // 
-            // button11
-            // 
-            this.button11.Location = new System.Drawing.Point(21, 221);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(95, 32);
-            this.button11.TabIndex = 0;
-            this.button11.Text = "Böl";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.button11_Click_1);
             // 
             // button4
             // 
@@ -380,8 +356,6 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button button13;
-        private System.Windows.Forms.Button button12;
-        private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;

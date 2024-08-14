@@ -15,6 +15,7 @@ using System.Text.Json.Serialization;
 using System.Data.SqlClient;
 using static System.Net.WebRequestMethods;
 using Cafe.Forms;
+using Cafe.Interface;
 
 namespace Cafe
 {
@@ -22,26 +23,27 @@ namespace Cafe
     {
         private Buttons buttons;
         private Menu menuItem;
-        private AddItems addItem;
+       
         private DataTable dt;
-      
+        private readonly IDataAccessTable _dataAccessTable;
+        private readonly IDataAccessItem _dataAccessItem;
         public FormTableInfo()
         {
             InitializeComponent();
 
             buttons = new Buttons();
             menuItem = new Menu();
-            addItem = new AddItems();
-          
+           
+            _dataAccessTable = new Tables();
+            _dataAccessItem = new AddItems();
+
+            dt = new DataTable();
 
         }
         public void SetItemsInDataGridView()
         {
             label1.Text = "";
-            double summ = 0;
-            dt = menuItem.GetDataTableByTableInfo(label2.Text);
-            dataGridView1.DataSource = dt;
-            summ = getSum(summ);
+            FillDatagridview();
             
         }
 
@@ -51,13 +53,14 @@ namespace Cafe
             panel3.BackColor = ColorTranslator.FromHtml("#23282D");
             button1.BackColor = ColorTranslator.FromHtml("#375168");
 
+
         }
     
         private void ButtonAddToPanel(string category)
         {
             
             panel1.Controls.Clear();
-            var buttonitem = addItem.GetItemsNameByCategory(category);
+            var buttonitem = menuItem.GetItemName(category);
 
 
             for (int i = 0; i < buttonitem.Count; i++)
@@ -81,11 +84,13 @@ namespace Cafe
         private void FillDatagridview()
         {
             double sum = 0;
-
-            dt = menuItem.GetDataTableByTableInfo(label2.Text);
+            var reader = _dataAccessTable.GetDataTableByTableInfo(label2.Text);
+            dt.Clear();
+            dt.Load(reader);
+            reader.Close();
             dataGridView1.DataSource = dt;
-
             sum = getSum(sum);
+           
         }
 
         private double getSum(double sum)
@@ -93,7 +98,7 @@ namespace Cafe
             foreach (DataGridViewRow row in dataGridView1.Rows)
             {
 
-                object cell = row.Cells[2].Value;
+                object cell = row.Cells[1].Value;
 
                 if (cell != null && double.TryParse(cell.ToString(), out double numericValue))
                 {
@@ -109,13 +114,13 @@ namespace Cafe
         {
             string table = label2.Text;
             string ad;
-            int price;
+            double price;
             
-            DataTable reader = menuItem.GetItemInfos(btn.Text, table);
+            DataTable reader = _dataAccessItem.GetItemInfos(btn.Text, table);
 
             foreach (DataRow row in reader.Rows) {
                 ad = row[0].ToString();
-                price = Convert.ToInt32(row[2].ToString());
+                price = Convert.ToDouble(row[1].ToString());
                 Database.SetDatabase(ad, price,table);
 
             }
@@ -154,16 +159,11 @@ namespace Cafe
             ButtonAddToPanel("6");
         }
 
-        private void button11_Click(object sender, EventArgs e)
-        {
-            
-
-        }
+       
         private void button3_Click(object sender, EventArgs e)
         {
             Database.DeleteAllProductInTable(label2.Text);
             FillDatagridview();
-            // İkram Ödeme Alınacak Ancak Cüroya Yansımayacak
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -171,37 +171,28 @@ namespace Cafe
 
             try {
             
-            
-            
-            DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
-            foreach (DataGridViewCell cell in selectedRow.Cells)
-            {
-                
-                if(cell.ValueType == typeof(string) && cell.Value != null)
+                DataGridViewRow selectedRow = dataGridView1.SelectedRows[0];
+                foreach (DataGridViewCell cell in selectedRow.Cells)
                 {
+                
+                    if(cell.ValueType == typeof(string) && cell.Value != null)
+                    {
 
-                 Database.DeleteProductInTable(label2.Text,cell.Value);
+                     Database.DeleteProductInTable(label2.Text,cell.Value);
 
+                    }
+                    FillDatagridview();
                 }
             }
-            }
             catch (Exception ex) { 
-                MessageBox.Show("İlk Satırdaki Ürünü Silmek İstediğinizden Eminmisiniz ? ");
+                MessageBox.Show(ex.Message);
                 button3_Click(sender,e);
             }
 
             //  Seçili Olan ürün İade et
         }
 
-        private void button11_Click_1(object sender, EventArgs e)
-        {
-            // Böl Hesap Bölünecek
-        }
-
-        private void button12_Click(object sender, EventArgs e)
-        {
-            // İskonto Verilen Yüzde Oranında İskonto Uygulanacak
-        }
+       
 
         private void button13_Click(object sender, EventArgs e)
         {
@@ -226,6 +217,7 @@ namespace Cafe
 
         private void button1_Click(object sender, EventArgs e)
         {
+            this.Close();
             FormBill formBill = new FormBill();
             formBill.Text = label2.Text;
             formBill.ShowDialog();

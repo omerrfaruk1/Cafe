@@ -33,11 +33,12 @@
             this.babtn = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // sbtn
             // 
-            this.sbtn.Location = new System.Drawing.Point(12, 12);
+            this.sbtn.Location = new System.Drawing.Point(264, 7);
             this.sbtn.Name = "sbtn";
             this.sbtn.Size = new System.Drawing.Size(237, 87);
             this.sbtn.TabIndex = 0;
@@ -47,7 +48,7 @@
             // 
             // bbtn
             // 
-            this.bbtn.Location = new System.Drawing.Point(255, 11);
+            this.bbtn.Location = new System.Drawing.Point(507, 6);
             this.bbtn.Name = "bbtn";
             this.bbtn.Size = new System.Drawing.Size(237, 87);
             this.bbtn.TabIndex = 0;
@@ -57,7 +58,7 @@
             // 
             // babtn
             // 
-            this.babtn.Location = new System.Drawing.Point(498, 11);
+            this.babtn.Location = new System.Drawing.Point(750, 6);
             this.babtn.Name = "babtn";
             this.babtn.Size = new System.Drawing.Size(237, 87);
             this.babtn.TabIndex = 0;
@@ -75,16 +76,27 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(811, 40);
+            this.label1.Location = new System.Drawing.Point(1079, 40);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(0, 20);
             this.label1.TabIndex = 2;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(21, 7);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(237, 87);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Dolu Masalar";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // Formtables
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1304, 622);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.babtn);
@@ -105,5 +117,6 @@
         private System.Windows.Forms.Button babtn;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -15,129 +15,123 @@ namespace Cafe.Classes
     {
         private static string connectionString = Properties.Settings.Default.cafeConnectionString;
 
-        public static SqlDataReader GetDatabase(string commandparm,string commandval)
+
+
+        public static SqlDataReader GetDatabase(string commandparm, string commandval)
         {
-            SqlConnection conn = new SqlConnection(connectionString);
             try
             {
-                conn.Open();
-                SqlCommand command = new SqlCommand(commandparm , conn);
-                command.Parameters.AddWithValue("@k1", commandval);
-                return command.ExecuteReader(CommandBehavior.CloseConnection);
-              
+                string query = commandparm;
+                SqlParameter param = new SqlParameter("@k1", commandval);
+
+                return DatabaseHelper.ExecuteReader(query, param);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+                return null;
+            }
+           
+
+        }
+
+        public static void SetDatabase(string ad, double price, string tableName)
+        {
+            try
+            {
+
+                string query = "insert into product_table (Ad,Fiyat,masa,changed,Eklenme_Tarihi) values (@ad,@price,@table,@changed,@date)";
+                SqlParameter[] parameters = new SqlParameter[] {
+                        new SqlParameter("@ad", ad),
+                        new SqlParameter("@price", price),
+                        new SqlParameter("@table", tableName),
+                        new SqlParameter("@changed", "False"),
+                        new SqlParameter("@date", DateTime.Now)
+                };
+
+                DatabaseHelper.ExecuteNoneQuery(query, parameters);
+
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                throw;
             }
-
         }
 
-        public static void SetDatabase(string ad,int price ,string tableName)
+
+        public static void CancelAddedItem(string tablaname)
         {
-            SqlConnection con = new SqlConnection(connectionString);
             try
             {
-                con.Open();
-                string command = "insert into product_table (Ad,Fiyat,masa,Eklenme_Tarihi) values (@ad,@price,@table,@date)";
-                SqlCommand cmd = new SqlCommand(command, con);
-                cmd.Parameters.AddWithValue("@ad", ad);
-                cmd.Parameters.AddWithValue("@price", price);
-                cmd.Parameters.AddWithValue("@table", tableName);
-                cmd.Parameters.AddWithValue("@date", DateTime.Now);
-                cmd.ExecuteNonQuery();
-                con.Close();
-            }
-            catch (Exception ex) {
-                MessageBox.Show (ex.Message);
-                
-            }
-        }
 
-        public static void CancelAddedItem(string tablaname) {
             
-            
-            SqlConnection sqlConnection = new SqlConnection(connectionString);
             int idToDelete = 0;
-            try {  
-                sqlConnection.Open();
-                string cmd = "Select top 1 * FROM product_table WHERE masa = '" + tablaname +"' ORDER BY id DESC ";
-                SqlCommand command = new SqlCommand(cmd, sqlConnection);
-                SqlDataReader reader =  command.ExecuteReader(CommandBehavior.CloseConnection);
-                if (reader.Read()) {
+            string query = "Select top 1 * FROM product_table WHERE masa = '" + tablaname + "' ORDER BY id DESC ";
+            SqlDataReader reader = DatabaseHelper.ExecuteReader(query);
+                if (reader.Read())
+                {
                     idToDelete = reader.GetInt32(0);
                 }
                 reader.Close();
 
 
-                SqlConnection Connection = new SqlConnection(connectionString);
-
                 if (idToDelete > 0)
                 {
-                    Connection.Open(); 
-                    string deleteQuery = "DELETE FROM product_table WHERE id = @id";
-
-                    SqlCommand deleteCommand = new SqlCommand(deleteQuery, Connection);
-                    
-                        deleteCommand.Parameters.AddWithValue("@id", idToDelete);
-                        deleteCommand.ExecuteNonQuery();
-                    
+                    string Deletequery = "DELETE FROM product_table WHERE id = @id";
+                    SqlParameter param = new SqlParameter("@id", idToDelete);
+                    DatabaseHelper.ExecuteNoneQuery(Deletequery, param);
                 }
-                Connection.Close();
-
-            } catch(Exception ex) {
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message);
             }
-        }
-
-        public static void DeleteAllProductInTable(string tablaname) {
-
-            SqlConnection sqlConnection = new SqlConnection(connectionString);
-            sqlConnection.Open();
-            string command = "Delete  from product_table where masa = @masano";
-            SqlCommand deleteCommand = new SqlCommand(command, sqlConnection);
-            deleteCommand.Parameters.AddWithValue("@masano", tablaname);
-            deleteCommand.ExecuteNonQuery();
 
         }
 
-        public static void DeleteProductInTable(string tablaname,object productname)
+        public static void DeleteAllProductInTable(string tablaname)
+        {
+            try
+            {
+                string command = "Delete  from product_table where masa = @masano";
+                SqlParameter param = new SqlParameter("@masano", tablaname);
+                DatabaseHelper.ExecuteNoneQuery(command, param);
+            }
+            catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+            
+
+        }
+
+        public static void DeleteProductInTable(string tablaname, object productname)
         {
 
             productname = productname.ToString();
-            SqlConnection sqlConnection = new SqlConnection(connectionString);
             int idToDelete = 0;
             try
             {
-                sqlConnection.Open();
                 string cmd = "Select top 1 * FROM product_table WHERE masa =@masano  and  ad =@productname ORDER BY id DESC ";
-                SqlCommand command = new SqlCommand(cmd, sqlConnection);
-                command.Parameters.AddWithValue("@masano", tablaname);
-                command.Parameters.AddWithValue("@productname", productname);
-                object result = command.ExecuteScalar();
+                SqlParameter[] param = new SqlParameter[] 
+                {
+                    new SqlParameter ("@masano", tablaname),
+                    new SqlParameter("@productname", productname)
+                };
+
+                object result = DatabaseHelper.ExecuteScalar(cmd,param);
 
                 if (result != null)
                 {
                     idToDelete = Convert.ToInt32(result);
                 }
-                sqlConnection.Close();
 
-                SqlConnection Connection = new SqlConnection(connectionString);
 
                 if (idToDelete > 0)
                 {
-                    Connection.Open();
                     string deleteQuery = "DELETE FROM product_table WHERE id = @id";
-
-                    SqlCommand deleteCommand = new SqlCommand(deleteQuery, Connection);
-
-                    deleteCommand.Parameters.AddWithValue("@id", idToDelete);
-                    deleteCommand.ExecuteNonQuery();
-
+                    SqlParameter parameter = new SqlParameter("@id", idToDelete);
+                    DatabaseHelper.ExecuteNoneQuery(deleteQuery, parameter);
 
                 }
-                Connection.Close();
 
             }
             catch (Exception ex)
@@ -146,15 +140,23 @@ namespace Cafe.Classes
             }
         }
 
-        public static void UpdateProductPriceAfterBill(string tablaname, double billAmount) {
+        public static void UpdateProductPriceAfterBill(string tablaname, double billAmount)
+        {
+            try
+            {
+                string cmd = "UPDATE product_table SET Fiyat = Fiyat * @b1 , changed = 'True' WHERE masa = @t1";
+
+                SqlParameter[] param = new SqlParameter[]{
+                new SqlParameter("@b1", billAmount),
+                new SqlParameter("@t1", tablaname)
+            };
+                DatabaseHelper.ExecuteNoneQuery(cmd, param);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             
-            SqlConnection sqlConnection = new SqlConnection(connectionString);
-            sqlConnection.Open();
-            string cmd = "UPDATE product_table SET Fiyat = Fiyat * @b1 , changed = 'True' WHERE masa = @t1";
-            SqlCommand command = new SqlCommand(cmd,sqlConnection);
-            command.Parameters.Add("@b1", billAmount);
-            command.Parameters.Add("@t1", tablaname);
-            command.ExecuteNonQuery();
         }
     }
 }
