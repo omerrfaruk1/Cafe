@@ -1,14 +1,9 @@
-﻿using Cafe.Interface;
-using Microsoft.SqlServer.Server;
+﻿using Cafe.Forms;
+using Cafe.Interface;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Cafe
@@ -18,13 +13,15 @@ namespace Cafe
         private Buttons crtBtn;
         private FormTableInfo tableInfo;
         private Menu menu;
+        public List<Button> list;
         private const int width = 85;
         private const int heigth = 85;
         private const int perRows = 6;
         private const int spacing = 20;
-        int salonno = 6;
-        int balkonno = 9;
-        int bahceno = 7;
+        int salonno = Properties.Settings.Default.SalonBtnNo;
+        int balkonno = Properties.Settings.Default.BalkonBtnNo;
+        int bahceno = Properties.Settings.Default.BahceBtnNo;
+
         public Formtables()
         {
             InitializeComponent();
@@ -32,30 +29,44 @@ namespace Cafe
             crtBtn = new Buttons();
             tableInfo = new FormTableInfo();
             menu = new Menu();
+            list = new List<Button>();
         }
+        public List<Button> getBtnInfo()
+        {
+            foreach(Control ctrl  in this.Controls) {
 
+                if (ctrl is Button) {
+
+                    if (ctrl.Text != "Dolu Masalar") {
+                        list.Add((Button)ctrl);
+                    }
+
+                }
+            }
+            return list;
+        }
         public void sbtn_Click(object sender, EventArgs e)
         {
-            string bahce = "Salon";
-            CreateBtn(bahce);
+            string salon = "Salon";
+            CreateBtn(salon,salonno);
         }
 
         public void bbtn_Click(object sender, EventArgs e)
         {
 
-            string bahce = "Balkon ";
-            CreateBtn(bahce);
+            string balkon = "Balkon ";
+            CreateBtn(balkon,balkonno);
         }
 
         public void babtn_Click(object sender, EventArgs e)
         {
             string bahce = "Bahçe ";
-            CreateBtn(bahce);
+            CreateBtn(bahce,bahceno);
             
         }
-        private void CreateBtn(string place)
+        public void CreateBtn(string place,int btnNumber)
         {
-            var buttons = crtBtn.Create_Buttons(bahceno, width, heigth, spacing, perRows);
+            var buttons = crtBtn.Create_Buttons(btnNumber, width, heigth, spacing, perRows);
             addButtonsToPanel(buttons, place);
         }
         private void addButtonsToPanel(List<Button> buttonList, string name)
@@ -111,7 +122,6 @@ namespace Cafe
                 }
                 else
                 {
-                    Console.WriteLine(res + "zaten mevcut"); 
                 }
             }
             panel1.Controls.Clear();
@@ -132,6 +142,13 @@ namespace Cafe
             }
 
 
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+           
+            FormSettings formSettings = new FormSettings();
+            formSettings.ShowDialog();
         }
     }
 }

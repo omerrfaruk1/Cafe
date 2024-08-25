@@ -33,9 +33,10 @@ namespace Cafe.Classes
            
 
         }
-
+       
         public static void SetDatabase(string ad, double price, string tableName)
         {
+
             try
             {
 
@@ -57,7 +58,7 @@ namespace Cafe.Classes
             }
         }
 
-
+        // FormTableInfo Area
         public static void CancelAddedItem(string tablaname)
         {
             try
@@ -158,5 +159,8 @@ namespace Cafe.Classes
             }
             
         }
+
+
+       
     }
 }

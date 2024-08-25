@@ -48,7 +48,7 @@ namespace Cafe.Forms
        }
         private void SaveLabelValue()
         {
-            Settings.Default.BillInfo = label2.Text;
+            Settings.Default.SalonBtnNo = Convert.ToInt32(label2.Text);
             Settings.Default.Save(); 
         }
         private void FormBill_Load(object sender, EventArgs e)
@@ -118,7 +118,7 @@ namespace Cafe.Forms
                 if (cell != null && double.TryParse(cell.ToString(), out double numericValue))
                 {
                     sum += numericValue;
-                    sum = sum - Settings.Default.BillAmount; 
+                    sum = sum - Settings.Default.BalkonBtnNo; 
                 }
                 label1.Text = "₺" + sum.ToString();
             }

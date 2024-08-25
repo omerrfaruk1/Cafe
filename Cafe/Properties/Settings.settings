@@ -6,11 +6,14 @@
       <Value Profile="(Default)">Data Source=DESKTOP-LCHCDI1;Initial Catalog=cafe;Integrated Security=True;Encrypt=False
 </Value>
     </Setting>
-    <Setting Name="BillInfo" Type="System.String" Scope="User">
-      <Value Profile="(Default)" />
+    <Setting Name="SalonBtnNo" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">6</Value>
     </Setting>
-    <Setting Name="BillAmount" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">0</Value>
+    <Setting Name="BalkonBtnNo" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">9</Value>
+    </Setting>
+    <Setting Name="BahceBtnNo" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">7</Value>
     </Setting>
   </Settings>
 </SettingsFile>

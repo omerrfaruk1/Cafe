@@ -38,25 +38,37 @@ namespace Cafe.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string BillInfo {
+        [global::System.Configuration.DefaultSettingValueAttribute("6")]
+        public int SalonBtnNo {
             get {
-                return ((string)(this["BillInfo"]));
+                return ((int)(this["SalonBtnNo"]));
             }
             set {
-                this["BillInfo"] = value;
+                this["SalonBtnNo"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public int BillAmount {
+        [global::System.Configuration.DefaultSettingValueAttribute("9")]
+        public int BalkonBtnNo {
             get {
-                return ((int)(this["BillAmount"]));
+                return ((int)(this["BalkonBtnNo"]));
             }
             set {
-                this["BillAmount"] = value;
+                this["BalkonBtnNo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("7")]
+        public int BahceBtnNo {
+            get {
+                return ((int)(this["BahceBtnNo"]));
+            }
+            set {
+                this["BahceBtnNo"] = value;
             }
         }
     }

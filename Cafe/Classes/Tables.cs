@@ -25,6 +25,7 @@ namespace Cafe
 
             return reader;
         }
+
         public IDataReader GetDataTableByName(string name)
         {
             param = name.ToString();
@@ -54,6 +55,7 @@ namespace Cafe
 
             return reader;
         }
+       
     }
    
 }

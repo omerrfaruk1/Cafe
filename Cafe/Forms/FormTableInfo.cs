@@ -222,5 +222,10 @@ namespace Cafe
             formBill.Text = label2.Text;
             formBill.ShowDialog();
         }
+
+        private void panel4_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

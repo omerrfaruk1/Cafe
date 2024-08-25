@@ -90,6 +90,7 @@
     <Compile Include="Classes\Buttons.cs" />
     <Compile Include="Classes\Database.cs" />
     <Compile Include="Classes\DataBaseHelper.cs" />
+    <Compile Include="Classes\SettingsItem.cs" />
     <Compile Include="Forms\FormBill.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -102,6 +103,24 @@
     <Compile Include="Forms\FormLoginPage.Designer.cs">
       <DependentUpon>FormLoginPage.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FormSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSettings.Designer.cs">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormItemsSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormItemsSettings.Designer.cs">
+      <DependentUpon>FormItemsSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\FormSettingsReports.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormSettingsReports.Designer.cs">
+      <DependentUpon>FormSettingsReports.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\FormTableInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +129,12 @@
     </Compile>
     <Compile Include="Classes\Tables.cs" />
     <Compile Include="Classes\Menu.cs" />
+    <Compile Include="Forms\FormTablesSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\FormTablesSettings.Designer.cs">
+      <DependentUpon>FormTablesSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Interface\IDataAccessItem.cs" />
     <Compile Include="Interface\IDataAccessTable.cs" />
     <Compile Include="Program.cs" />
@@ -123,11 +148,23 @@
     <EmbeddedResource Include="Forms\FormBill.resx">
       <DependentUpon>FormBill.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormItemsSettings.resx">
+      <DependentUpon>FormItemsSettings.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormLoginPage.resx">
       <DependentUpon>FormLoginPage.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSettings.resx">
+      <DependentUpon>FormSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormSettingsReports.resx">
+      <DependentUpon>FormSettingsReports.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\FormTableInfo.resx">
       <DependentUpon>FormTableInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\FormTablesSettings.resx">
+      <DependentUpon>FormTablesSettings.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
